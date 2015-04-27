@@ -10,8 +10,20 @@ namespace Retrospectiva.Backend.Web.Models {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string Number { get; set; }
+        public int Number { get; set; }
 
-        public ICollection<Question> Questions { get; set; }  
+        public virtual ICollection<SprintRetrospective> Retrospectives { get; set; }
+
+        public void AddRetrospectiveFor(Team team) {
+            if (Retrospectives.Any(x => x.TeamId == team.Id)) 
+                throw new Exception("Retrospective already created!");        
+
+            var retrospective = new SprintRetrospective() {
+                SprintId = this.Id,
+                TeamId = team.Id,
+                Members = team.Members
+            };
+            Retrospectives.Add(retrospective);
+        }
     } //class
 }

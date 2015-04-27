@@ -4,9 +4,8 @@ using System.Linq;
 using System.Web;
 
 namespace Retrospectiva.Backend.Web.Representation {
-    public class MemberRepresentation {
+    public class SprintRepresentation {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public Guid TeamId { get; set; }
+        public int SprintNumber { get; set; }
     }
 }

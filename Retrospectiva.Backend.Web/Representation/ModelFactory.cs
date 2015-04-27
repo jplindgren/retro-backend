@@ -10,8 +10,52 @@ namespace Retrospectiva.Backend.Web.Representation {
             return new MemberRepresentation() {
                 Id = member.Id,
                 Name = member.Name,
+                TeamId = member.TeamId
+            };
+        }
+
+        public MemberDetailRepresentation GetMemberDetailRepresentation(Member member) {
+            return new MemberDetailRepresentation() {
+                Id = member.Id,
+                Name = member.Name,
                 TeamId = member.TeamId,
                 TeamName = member.Team.Name
+            };
+        }
+
+        public RetrospectiveRepresentation GetRetrospectiveRepresentation(SprintRetrospective retrospective) {
+            return new RetrospectiveRepresentation() {
+                Id = retrospective.Id,
+                SprintNumber = retrospective.Sprint.Number,
+                TeamName = retrospective.Team.Name,
+                SprintId = retrospective.SprintId,
+                TeamId = retrospective.TeamId
+            };
+        }
+
+        public RetrospectiveDetailRepresentation GetRetrospectiveDetailRepresentation(SprintRetrospective retrospective) {
+            return new RetrospectiveDetailRepresentation() {
+                Id = retrospective.Id,
+                SprintNumber = retrospective.Sprint.Number,
+                TeamName = retrospective.Team.Name,
+                SprintId = retrospective.SprintId,
+                TeamId = retrospective.TeamId,
+                Questions = retrospective.Questions.Select(x => GetQuestionRepresentation(x)),
+                Members = retrospective.Members.Select(x => GetMemberRepresentation(x))
+            };
+        }
+
+        public SprintRepresentation GetSprintRepresentation(Sprint sprint) {
+            return new SprintRepresentation() {
+                Id = sprint.Id,
+                SprintNumber = sprint.Number
+            };
+        }
+
+        public QuestionRepresentation GetQuestionRepresentation(Question question) { 
+            return new QuestionRepresentation() {
+                Id = question.Id,
+                Description = question.Description
             };
         }
     } //class

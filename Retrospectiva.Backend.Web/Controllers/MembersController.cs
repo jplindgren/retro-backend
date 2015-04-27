@@ -8,21 +8,24 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
+    [RoutePrefix("api/members")]
     public class MembersController : BaseApiController {
-        // GET api/values
-        public IEnumerable<Member> Get() {
-            var test = Context.Members.ToList();
-            return test;
+        [Route("")]
+        public IEnumerable<MemberRepresentation> Get() {
+            var representations = Context.Members.ToList().Select(x => ModelFactory.GetMemberRepresentation(x));
+            return representations;
         }
 
-        // GET api/values/5
+        [Route("{id:Guid}")]
         public MemberRepresentation Get(Guid id) {
-            return ModelFactory.GetMemberRepresentation(GetMember(id));
+            return ModelFactory.GetMemberDetailRepresentation(GetMember(id));
         }
 
-        // POST api/values
+        // POST api/members
+        [Route("")]
+        [HttpPost]
         public void Post([FromBody]Member value) {
-            var team = new Team(){
+            var team = new Team() {
                 Name = "Team DropEvents"
             };
             Context.Teams.Add(team);
@@ -41,14 +44,26 @@ namespace Retrospectiva.Backend.Web.Controllers {
         }
 
         // DELETE api/values/5
+        [Route("")]
+        [HttpDelete]
         public void Delete(Guid id) {
             var member = GetMember(id);
             Context.Members.Add(member);
             Context.SaveChanges();
         }
 
+        #region Answers
+        //[Route("{id:Guid}/sprint/{sprintId:Guid}/answer")]
+        //[HttpPost]
+        //public void AwnswerQuestion(Guid id, Guid sprintId, [FromBody]Answer answer) {
+        //    var member = Context.Members.Include("SprintLookups").Where(x => x.Id == id).FirstOrDefault();
+        //    member.AddAnswer(sprintId, answer);
+        //    Context.SaveChanges();
+        //}
+        #endregion
+
         private Member GetMember(Guid id) {
-            return Context.Members.Where(x => x.Id == id).FirstOrDefault();            
+            return Context.Members.Include("Team").Where(x => x.Id == id).FirstOrDefault();            
         }
     } //class
 }

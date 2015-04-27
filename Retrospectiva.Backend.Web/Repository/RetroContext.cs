@@ -9,11 +9,12 @@ namespace Retrospectiva.Backend.Web.Repository {
     public class RetroContext : DbContext{
         public RetroContext()
             : base("DefaultConnection") {
-                Database.SetInitializer<RetroContext>(new DbInitializer());
+                //Database.SetInitializer<RetroContext>(new DbInitializer());
         }
 
         public DbSet<Team> Teams { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
+        public DbSet<SprintRetrospective> Retrospectives { get; set; }
         public DbSet<Member> Members { get; set; }
     } //cass
 }

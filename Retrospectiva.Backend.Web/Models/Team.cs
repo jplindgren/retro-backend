@@ -13,6 +13,6 @@ namespace Retrospectiva.Backend.Web.Models {
         public string Name { get; set; }
 
         [InverseProperty("Team")]
-        public ICollection<Member> Members { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
     } //class
 }

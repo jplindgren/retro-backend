@@ -8,6 +8,7 @@ using System.Web;
 namespace Retrospectiva.Backend.Web.Repository {
     public class DbInitializer : DropCreateDatabaseAlways<RetroContext>{
         protected override void Seed(RetroContext context) {
+            base.Seed(context);
             IList<Team> teams = new List<Team>();
             IList<Member> members = new List<Member>();
 
@@ -16,8 +17,6 @@ namespace Retrospectiva.Backend.Web.Repository {
             foreach (Team team in teams)
                 context.Teams.Add(team);
             context.SaveChanges();
-
-            base.Seed(context);
         }
     }
 }

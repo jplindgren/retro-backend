@@ -6,16 +6,22 @@ using System.Linq;
 using System.Web;
 
 namespace Retrospectiva.Backend.Web.Models {
-    public class Question {
+    public class Answer {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string Description { get; set; }
+        public string Text { get; set; }
+
+        [ForeignKey("QuestionId")]
+        public Question Question { get; set; }
+        public Guid QuestionId { get; set; }
+
+        [ForeignKey("MemberId")]
+        public Member Member { get; set; }
+        public Guid MemberId { get; set; }
 
         [ForeignKey("RetrospectiveId")]
         public SprintRetrospective Retrospective { get; set; }
         public Guid RetrospectiveId { get; set; }
-
-        public ICollection<Answer> Answers { get; set; }
     } //class
 }
