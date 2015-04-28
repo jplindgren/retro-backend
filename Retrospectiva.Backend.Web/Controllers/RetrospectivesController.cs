@@ -8,31 +8,32 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
-    [RoutePrefix("api/retrospectives")]
+    [RoutePrefix("api")]
     public class RetrospectivesController : BaseApiController {
-        // GET api/values
-        [Route("")]
-        public IEnumerable<RetrospectiveRepresentation> Get() {
-            return Context.Retrospectives.Select(x => ModelFactory.GetRetrospectiveRepresentation(x)).ToList();
-        }
-
         // GET api/values/5
-        [Route("{id:Guid}")]
+        [Route("retrospectives/{id:Guid}")]
         public RetrospectiveDetailRepresentation Get(Guid id) {
             return ModelFactory.GetRetrospectiveDetailRepresentation(GetRetrospective(id));
         }
 
-        // POST api/values
-        [HttpPost]
-        [Route("")]
-        public void Post([FromBody]CreateRetrospetiveMessageDTO value) {
-            var sprint = Context.Sprints.Where(x => x.Id == value.SprintId).FirstOrDefault();
-            var team = Context.Teams.Where(x => x.Id == value.TeamId).FirstOrDefault();
-            sprint.AddRetrospectiveFor(team);
-            
-            Context.SaveChanges();
+        // GET api/teams/4/values
+        [Route("teams/{id:Guid}/retrospectives")]
+        public IEnumerable<RetrospectiveRepresentation> GetByTeamId(Guid id) {
+            return Context.Retrospectives.Include("Team").Include("Sprint")
+                .Where(x => x.TeamId == id).ToList()
+                .Select(x => ModelFactory.GetRetrospectiveRepresentation(x)).ToList();
         }
 
+        // POST api/values
+        [HttpPost]
+        [Route("sprints/{id:Guid}/retrospectives")]
+        public void Post(Guid id, [FromBody]CreateRetrospetiveMessageDTO value) {
+            var sprint = Context.Sprints.Where(x => x.Id == id).FirstOrDefault();
+            var team = Context.Teams.Where(x => x.Id == value.TeamId).FirstOrDefault();
+            sprint.AddRetrospectiveFor(team);
+
+            Context.SaveChanges();
+        }
 
         #region QUESTIONS
         //[HttpPost()]
@@ -62,6 +63,5 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
     public class CreateRetrospetiveMessageDTO {
         public Guid TeamId { get; set; }
-        public Guid SprintId { get; set; }
     }
 }

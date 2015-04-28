@@ -25,16 +25,6 @@ namespace Retrospectiva.Backend.Web.Controllers {
         [Route("")]
         [HttpPost]
         public void Post([FromBody]Member value) {
-            var team = new Team() {
-                Name = "Team DropEvents"
-            };
-            Context.Teams.Add(team);
-            Context.SaveChanges();
-
-            value = new Member() {
-                Name = "Joao Lindgren",
-                Team = team
-            };
             Context.Members.Add(value);
             Context.SaveChanges();
         }
