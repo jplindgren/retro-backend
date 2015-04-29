@@ -36,24 +36,32 @@ namespace Retrospectiva.Backend.Web.Controllers {
         }
 
         #region QUESTIONS
-        //[HttpPost()]
-        //[Route("{sprintId:Guid}/questions")]        
-        //public void AddQuestions([FromBody]Question value, Guid sprintId) {
-        //    var sprint = GetRetrospective(sprintId);
-        //    sprint.Questions.Add(value);
-        //    Context.SaveChanges();
-        //}
+        [HttpGet()]
+        [Route("retrospectives/{retrospectiveId:Guid}/questions")]
+        public IEnumerable<QuestionRepresentation> GetQuestions(Guid retrospectiveId) {            
+            return Context.Questions.Include("Retrospective")
+                .Where(x => x.RetrospectiveId == retrospectiveId).ToList()
+                .Select(x => new QuestionRepresentation() { Description = x.Description, Id = x.Id });
+        }
 
-        //// POST api/values
-        //[Route("{sprintId:Guid}/questions/{questionId}")]
-        //[HttpDelete]
-        //public void RemoveQuestions(Guid sprintId, Guid questionId) {
-        //    var sprint = GetRetrospective(sprintId);
-        //    var targetQuestion = sprint.Questions.Where(x => x.Id == questionId).FirstOrDefault();
-        //    sprint.Questions.Remove(targetQuestion);
-        //    Context.SaveChanges();
-        //}
+        [HttpPost()]
+        [Route("retrospectives/{retrospectiveId:Guid}/questions")]
+        public void AddQuestions([FromBody]Question value, Guid retrospectiveId) {
+            //var retrospective = GetRetrospective(retrospectiveId);            
+            value.RetrospectiveId = retrospectiveId;
+            //retrospective.Questions.Add(value);
+            Context.Questions.Add(value);
+            Context.SaveChanges();
+        }
 
+        [Route("retrospectives/{retrospectiveId:Guid}/questions/{questionId}")]
+        [HttpDelete]
+        public void RemoveQuestions(Guid retrospectiveId, Guid questionId) {
+            var retrospective = GetRetrospective(retrospectiveId);
+            var targetQuestion = retrospective.Questions.Where(x => x.Id == questionId).FirstOrDefault();
+            retrospective.Questions.Remove(targetQuestion);
+            Context.SaveChanges();
+        }
         #endregion
 
         private SprintRetrospective GetRetrospective(Guid id) {

@@ -12,9 +12,8 @@ namespace Retrospectiva.Backend.Web.Controllers {
     public class TeamsController : BaseApiController {
         // POST api/members
         [Route("")]
-        public IEnumerable<Team> Get() {
-            var teams = Context.Teams.ToList();
-            return teams;
+        public IEnumerable<TeamRepresentation> Get() {
+            return Context.Teams.ToList().Select(x => ModelFactory.GetTeamRepresentation(x));
         }
 
         // POST api/members

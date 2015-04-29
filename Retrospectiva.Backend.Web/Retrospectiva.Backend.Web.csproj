@@ -191,6 +191,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DbInitializer.cs" />
     <Compile Include="Repository\RetroContext.cs" />
+    <Compile Include="Representation\TeamRepresentation.cs" />
     <Compile Include="Representation\SprintDetailRepresentation.cs" />
     <Compile Include="Representation\RetrospectiveDetailRepresentation.cs" />
     <Compile Include="Representation\MemberDetailRepresentation.cs" />

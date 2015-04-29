@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace Retrospectiva.Backend.Web.Representation {
@@ -57,6 +58,20 @@ namespace Retrospectiva.Backend.Web.Representation {
                 Id = question.Id,
                 Description = question.Description
             };
+        }
+
+        public TeamRepresentation GetTeamRepresentation(Team team) {
+            Func<Team, TeamRepresentation> _convert = BasicTeamExpression.Compile();
+            return _convert(team);
+        }
+
+        public Expression<Func<Team, TeamRepresentation>> BasicTeamExpression {
+            get {
+                return (team) => new TeamRepresentation {
+                   Id = team.Id,
+                   TeamName = team.Name
+                };
+            }
         }
     } //class
 }
