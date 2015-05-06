@@ -1,4 +1,5 @@
-﻿using Retrospectiva.Backend.Web.Models;
+﻿using Retrospectiva.Backend.Web.Filters;
+using Retrospectiva.Backend.Web.Models;
 using Retrospectiva.Backend.Web.Representation;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api/sprints")]
+    [CrossOrigin]
     public class SprintsController : BaseApiController {
         // GET api/values
         [Route("")]
