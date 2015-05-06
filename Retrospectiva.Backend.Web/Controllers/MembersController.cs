@@ -1,4 +1,5 @@
-﻿using Retrospectiva.Backend.Web.Models;
+﻿using Retrospectiva.Backend.Web.Filters;
+using Retrospectiva.Backend.Web.Models;
 using Retrospectiva.Backend.Web.Representation;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api/members")]
+    [CrossOrigin]
     public class MembersController : BaseApiController {
         [Route("")]
         public IEnumerable<MemberRepresentation> Get() {
@@ -24,9 +26,18 @@ namespace Retrospectiva.Backend.Web.Controllers {
         // POST api/members
         [Route("")]
         [HttpPost]
-        public void Post([FromBody]Member value) {
-            Context.Members.Add(value);
-            Context.SaveChanges();
+        [CrossOrigin]
+        public HttpResponseMessage Post([FromBody]Member value){
+            try{
+                Context.Members.Add(value);
+                Context.SaveChanges();
+            }
+            catch (Exception ex) {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+            var response = Request.CreateResponse(HttpStatusCode.Created, value);
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
         }
 
         // PUT api/values/5
