@@ -36,6 +36,14 @@ namespace Retrospectiva.Backend.Web.Controllers {
             Context.SaveChanges();
         }
 
+        [HttpOptions]
+        [Route("")]
+        public HttpResponseMessage Options() {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
+
         private Sprint GetSprint(Guid id) {
             return Context.Sprints.Include("Retrospectives").Where(x => x.Id == id).FirstOrDefault();
         }
