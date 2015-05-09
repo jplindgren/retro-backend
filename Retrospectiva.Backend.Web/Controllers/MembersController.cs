@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api/members")]
-    [CrossOrigin]
+    [AllowCrossOrigin]
     public class MembersController : BaseApiController {
         [Route("")]
         public IEnumerable<MemberRepresentation> Get() {
@@ -26,7 +26,7 @@ namespace Retrospectiva.Backend.Web.Controllers {
         // POST api/members
         [Route("")]
         [HttpPost]
-        [CrossOrigin]
+        [AllowCrossOrigin]
         public HttpResponseMessage Post([FromBody]Member value){
             try{
                 Context.Members.Add(value);

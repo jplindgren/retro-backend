@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http.Filters;
 
 namespace Retrospectiva.Backend.Web.Filters {
-    public class CrossOriginAttribute : ActionFilterAttribute {
+    public class AllowCrossOriginAttribute : ActionFilterAttribute {
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext) {
             if (actionExecutedContext.Response != null)
                 actionExecutedContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");

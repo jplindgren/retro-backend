@@ -174,7 +174,7 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Filters\CrossOriginAttribute.cs" />
+    <Compile Include="Filters\AllowCrossOriginAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

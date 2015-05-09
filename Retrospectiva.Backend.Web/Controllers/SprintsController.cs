@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api/sprints")]
-    [CrossOrigin]
+    [AllowCrossOrigin]
     public class SprintsController : BaseApiController {
         // GET api/values
         [Route("")]
