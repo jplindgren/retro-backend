@@ -10,10 +10,18 @@ using System.Web.Http;
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api/teams")]
     public class TeamsController : BaseApiController {
-        // POST api/members
+        // POST api/teams
         [Route("")]
         public IEnumerable<TeamRepresentation> Get() {
             return Context.Teams.ToList().Select(x => ModelFactory.GetTeamRepresentation(x));
+        }
+
+        // POST api/teams/{teamId:Guid}/members
+        [Route("{teamId:Guid}/members")]
+        public IEnumerable<MemberDetailRepresentation> Get(Guid teamId) {
+            return Context.Members.Where(x => x.TeamId == teamId)
+                                    .ToList()
+                                    .Select(x => ModelFactory.GetMemberDetailRepresentation(x));
         }
 
         // POST api/members

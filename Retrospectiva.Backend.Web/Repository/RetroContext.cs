@@ -1,4 +1,5 @@
-﻿using Retrospectiva.Backend.Web.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Retrospectiva.Backend.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Web;
 
 namespace Retrospectiva.Backend.Web.Repository {
-    public class RetroContext : DbContext{
+    public class RetroContext : IdentityDbContext<IdentityUser> {
         public RetroContext()
             : base("DefaultConnection") {
                 //Database.SetInitializer<RetroContext>(new DbInitializer());

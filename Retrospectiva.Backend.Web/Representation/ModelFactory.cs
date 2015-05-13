@@ -10,7 +10,7 @@ namespace Retrospectiva.Backend.Web.Representation {
         public MemberRepresentation GetMemberRepresentation(Member member) {
             return new MemberRepresentation() {
                 Id = member.Id,
-                Name = member.Name,
+                UserName = member.User.UserName,
                 TeamId = member.TeamId
             };
         }
@@ -18,7 +18,8 @@ namespace Retrospectiva.Backend.Web.Representation {
         public MemberDetailRepresentation GetMemberDetailRepresentation(Member member) {
             return new MemberDetailRepresentation() {
                 Id = member.Id,
-                Name = member.Name,
+                Name = member.User.Name,
+                UserName = member.User.UserName,
                 TeamId = member.TeamId,
                 TeamName = member.Team.Name
             };

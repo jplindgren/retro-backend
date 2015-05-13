@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,10 @@ namespace Retrospectiva.Backend.Web.Models {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string Name { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("TeamId")]
         public Team Team { get; set; }
