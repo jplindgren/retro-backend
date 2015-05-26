@@ -18,10 +18,10 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
         // POST api/teams/{teamId:Guid}/members
         [Route("{teamId:Guid}/members")]
-        public IEnumerable<MemberDetailRepresentation> Get(Guid teamId) {
-            return Context.Members.Where(x => x.TeamId == teamId)
+        public IEnumerable<MemberRepresentation> Get(Guid teamId) {
+            return Context.Members.Include("User").Where(x => x.TeamId == teamId)
                                     .ToList()
-                                    .Select(x => ModelFactory.GetMemberDetailRepresentation(x));
+                                    .Select(x => ModelFactory.GetMemberRepresentation(x));
         }
 
         // POST api/members
