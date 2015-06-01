@@ -12,7 +12,7 @@ namespace Retrospectiva.Backend.Web.Representation {
                 Id = member.Id,
                 UserName = member.User.UserName,
                 Name = member.User.Name,
-                TeamId = member.TeamId
+                SprintId = member.SprintId
             };
         }
 

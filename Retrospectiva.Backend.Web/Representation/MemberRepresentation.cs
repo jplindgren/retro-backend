@@ -9,5 +9,6 @@ namespace Retrospectiva.Backend.Web.Representation {
         public string UserName { get; set; }
         public string Name { get; set; }
         public Guid TeamId { get; set; }
+        public Guid SprintId { get; set; }
     }
 }

@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201505091754031_AddUserTable.Designer.cs">
       <DependentUpon>201505091754031_AddUserTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506010229375_AddSprintToMember.cs" />
+    <Compile Include="Migrations\201506010229375_AddSprintToMember.Designer.cs">
+      <DependentUpon>201506010229375_AddSprintToMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -371,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505091754031_AddUserTable.resx">
       <DependentUpon>201505091754031_AddUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506010229375_AddSprintToMember.resx">
+      <DependentUpon>201506010229375_AddSprintToMember.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

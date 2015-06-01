@@ -12,16 +12,19 @@ namespace Retrospectiva.Backend.Web.Controllers {
     public class TeamsController : BaseApiController {
         // POST api/teams
         [Route("")]
-        public IEnumerable<TeamRepresentation> Get() {
-            return Context.Teams.ToList().Select(x => ModelFactory.GetTeamRepresentation(x));
+        public IHttpActionResult Get() {
+            return Ok<IEnumerable<TeamRepresentation>>(Context.Teams.ToList().Select(x => ModelFactory.GetTeamRepresentation(x)));
         }
 
         // POST api/teams/{teamId:Guid}/members
         [Route("{teamId:Guid}/members")]
-        public IEnumerable<MemberRepresentation> Get(Guid teamId) {
-            return Context.Members.Include("User").Where(x => x.TeamId == teamId)
+        public IHttpActionResult Get(Guid teamId, Guid sprintId) {
+            if (Guid.Empty == sprintId)
+                return BadRequest("sprintId parameters not passed");
+            IEnumerable<MemberRepresentation> membersRepresentation = Context.Members.Include("User").Where(x => x.TeamId == teamId && x.SprintId == sprintId)
                                     .ToList()
                                     .Select(x => ModelFactory.GetMemberRepresentation(x));
+            return Ok<IEnumerable<MemberRepresentation>>(membersRepresentation);
         }
 
         // POST api/members
