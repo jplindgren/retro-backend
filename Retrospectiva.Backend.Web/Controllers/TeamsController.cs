@@ -18,10 +18,8 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
         // POST api/teams/{teamId:Guid}/members
         [Route("{teamId:Guid}/members")]
-        public IHttpActionResult Get(Guid teamId, Guid sprintId) {
-            if (Guid.Empty == sprintId)
-                return BadRequest("sprintId parameters not passed");
-            IEnumerable<MemberRepresentation> membersRepresentation = Context.Members.Include("User").Where(x => x.TeamId == teamId && x.SprintId == sprintId)
+        public IHttpActionResult Get(Guid teamId) {
+            IEnumerable<MemberRepresentation> membersRepresentation = Context.Members.Include("User").Where(x => x.TeamId == teamId)
                                     .ToList()
                                     .Select(x => ModelFactory.GetMemberRepresentation(x));
             return Ok<IEnumerable<MemberRepresentation>>(membersRepresentation);

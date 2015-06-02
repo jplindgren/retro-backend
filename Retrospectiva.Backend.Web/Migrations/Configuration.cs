@@ -1,5 +1,6 @@
 namespace Retrospectiva.Backend.Web.Migrations
 {
+    using Retrospectiva.Backend.Web.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -13,21 +14,28 @@ namespace Retrospectiva.Backend.Web.Migrations
             ContextKey = "Retrospectiva.Backend.Web.Repository.RetroContext";
         }
 
-        protected override void Seed(Retrospectiva.Backend.Web.Repository.RetroContext context)
-        {
-            
-            //  This method will be called after migrating to the latest version.
+        protected override void Seed(Retrospectiva.Backend.Web.Repository.RetroContext context){
+            for (int i = 1; i < 5; i++) {
+                context.Sprints.AddOrUpdate(new Sprint() {
+                    Number = i
+                });   
+            }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.SaveChanges();
+
+            context.Teams.AddOrUpdate(new Team() { 
+                Name = "DropEvents"
+            });
+
+            context.Teams.AddOrUpdate(new Team() {
+                Name = "Stark"
+            });
+
+            context.Teams.AddOrUpdate(new Team() {
+                Name = "RM"
+            });
+
+            context.SaveChanges();
         }
     }
 }

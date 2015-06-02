@@ -11,8 +11,7 @@ namespace Retrospectiva.Backend.Web.Representation {
             return new MemberRepresentation() {
                 Id = member.Id,
                 UserName = member.User.UserName,
-                Name = member.User.Name,
-                SprintId = member.SprintId
+                Name = member.User.Name
             };
         }
 

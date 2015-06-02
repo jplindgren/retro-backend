@@ -14,8 +14,11 @@ namespace Retrospectiva.Backend.Web.Controllers {
     public class SprintsController : BaseApiController {
         // GET api/values
         [Route("")]
-        public IEnumerable<SprintRepresentation> Get() {
-            return Context.Sprints.ToList().Select(x => ModelFactory.GetSprintRepresentation(x)).ToList();
+        public IHttpActionResult Get() {
+            var sprintsRepresentation = Context.Sprints
+                .OrderByDescending(x => x.Number)
+                .Select(x => ModelFactory.GetSprintRepresentation(x)).ToList();
+            return Ok<IEnumerable<SprintRepresentation>>(sprintsRepresentation);
         }
 
         // GET api/values/5

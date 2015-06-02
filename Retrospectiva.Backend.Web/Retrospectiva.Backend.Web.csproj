@@ -212,6 +212,14 @@
     <Compile Include="Migrations\201506010229375_AddSprintToMember.Designer.cs">
       <DependentUpon>201506010229375_AddSprintToMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506012024097_Seed.cs" />
+    <Compile Include="Migrations\201506012024097_Seed.Designer.cs">
+      <DependentUpon>201506012024097_Seed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506021849272_RemoveSprintFromMember.cs" />
+    <Compile Include="Migrations\201506021849272_RemoveSprintFromMember.Designer.cs">
+      <DependentUpon>201506021849272_RemoveSprintFromMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -378,6 +386,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506010229375_AddSprintToMember.resx">
       <DependentUpon>201506010229375_AddSprintToMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506012024097_Seed.resx">
+      <DependentUpon>201506012024097_Seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506021849272_RemoveSprintFromMember.resx">
+      <DependentUpon>201506021849272_RemoveSprintFromMember.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

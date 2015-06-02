@@ -20,10 +20,6 @@ namespace Retrospectiva.Backend.Web.Models {
         public Team Team { get; set; }
         public Guid TeamId { get; set; }
 
-        [ForeignKey("SprintId")]
-        public Sprint Sprint { get; set; }
-        public Guid SprintId { get; set; }
-
         public ICollection<Answer> Answers { get; set; }
         public ICollection<SprintRetrospective> Retrospectives { get; set; }
     } //class

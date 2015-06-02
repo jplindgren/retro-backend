@@ -18,10 +18,14 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
         // GET api/teams/4/values
         [Route("teams/{id:Guid}/retrospectives")]
-        public IEnumerable<RetrospectiveRepresentation> GetByTeamId(Guid id) {
-            return Context.Retrospectives.Include("Team").Include("Sprint")
-                .Where(x => x.TeamId == id).ToList()
-                .Select(x => ModelFactory.GetRetrospectiveRepresentation(x)).ToList();
+        public IHttpActionResult GetByTeamId(Guid id) {
+            var retrospectives = Context.Retrospectives.Include("Team").Include("Sprint").Include("Members.User").Include("Questions")
+                .Where(x => x.TeamId == id)
+                .OrderByDescending(x => x.Sprint.Number)
+                .Take(5)
+                .ToList()
+                .Select(x => ModelFactory.GetRetrospectiveDetailRepresentation(x));
+            return Ok<IEnumerable<RetrospectiveDetailRepresentation>>(retrospectives);
         }
 
         // POST api/values
