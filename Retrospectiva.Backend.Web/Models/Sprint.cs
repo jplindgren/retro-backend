@@ -20,9 +20,9 @@ namespace Retrospectiva.Backend.Web.Models {
 
             var retrospective = new SprintRetrospective() {
                 SprintId = this.Id,
-                TeamId = team.Id,
-                Members = team.Members
+                TeamId = team.Id
             };
+            retrospective.SetRetrospectiveMembers(team.Members.ToList());
             Retrospectives.Add(retrospective);
         }
     } //class

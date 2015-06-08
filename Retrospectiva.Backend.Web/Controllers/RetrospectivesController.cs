@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace Retrospectiva.Backend.Web.Controllers {
     [RoutePrefix("api")]
@@ -41,11 +42,46 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
         #region QUESTIONS
         [HttpGet()]
+        [Route("retrospectives/current/questions")]
+        public IHttpActionResult GetCurrentQuestions() {
+            var currentRetrospective = Context.Retrospectives
+                                                .Include(x => x.Questions).Include(x => x.Sprint)
+                                                .Where(x => x.Current).FirstOrDefault();
+
+            var result = ModelFactory.GetCurrentRetrospectiveQuestionsRepresentation(currentRetrospective);
+            return Ok<CurrentRetrospectiveQuestionsRepresentation>(result);
+        }
+
+        [HttpGet()]
         [Route("retrospectives/{retrospectiveId:Guid}/questions")]
-        public IEnumerable<QuestionRepresentation> GetQuestions(Guid retrospectiveId) {            
-            return Context.Questions.Include("Retrospective")
+        public IHttpActionResult GetQuestions(Guid retrospectiveId) {    
+            var currentQuestions = Context.Questions.Include("Sprint")
                 .Where(x => x.RetrospectiveId == retrospectiveId).ToList()
-                .Select(x => new QuestionRepresentation() { Description = x.Description, Id = x.Id });
+                .Select(x => ModelFactory.GetQuestionRepresentation(x));
+            return Ok<IEnumerable<QuestionRepresentation>>(currentQuestions);
+        }
+
+        [HttpPost()]
+        [Route("retrospectives/current/answers")]
+        public void Answer(AnswersRetrospectiveMessage message) {
+            var retrospectiveMember = Context.RetrospectivesMembers.Where(x => x.Id == message.RetrospectiveMemberId).FirstOrDefault();
+            var answers = message.Answers.Select(x => {
+                return new Answer() {
+                    QuestionId = x.QuestionId,
+                    RetrospectiveMemberId = message.RetrospectiveMemberId,
+                    Text = x.Answer
+                };
+            }).ToList();
+            retrospectiveMember.AddAnswers(answers);
+            Context.SaveChanges();
+        }
+
+        [HttpOptions]
+        [Route("retrospectives/current/answers")]
+        public HttpResponseMessage Options() {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
         }
 
         [HttpPost()]
@@ -75,5 +111,15 @@ namespace Retrospectiva.Backend.Web.Controllers {
 
     public class CreateRetrospetiveMessageDTO {
         public Guid TeamId { get; set; }
+    }
+
+    public class AnswersRetrospectiveMessage {
+        public AnswerMessage[] Answers { get; set; }
+        public Guid RetrospectiveMemberId { get; set; }
+    }
+
+    public class AnswerMessage {
+        public Guid QuestionId { get; set; }
+        public string Answer { get; set; }
     }
 }

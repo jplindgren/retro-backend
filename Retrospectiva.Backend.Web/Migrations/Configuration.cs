@@ -18,12 +18,12 @@ namespace Retrospectiva.Backend.Web.Migrations
             for (int i = 1; i < 5; i++) {
                 context.Sprints.AddOrUpdate(new Sprint() {
                     Number = i
-                });   
+                });
             }
 
             context.SaveChanges();
 
-            context.Teams.AddOrUpdate(new Team() { 
+            context.Teams.AddOrUpdate(new Team() {
                 Name = "DropEvents"
             });
 

@@ -10,12 +10,14 @@ namespace Retrospectiva.Backend.Web.Repository {
     public class RetroContext : IdentityDbContext<IdentityUser> {
         public RetroContext()
             : base("DefaultConnection") {
+                Database.Log = Console.Write;
                 //Database.SetInitializer<RetroContext>(new DbInitializer());
         }
 
         public DbSet<Team> Teams { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
         public DbSet<SprintRetrospective> Retrospectives { get; set; }
+        public DbSet<RetrospectiveMember> RetrospectivesMembers { get; set; }
         public DbSet<Member> Members { get; set; }
 
         public DbSet<Question> Questions { get; set; }

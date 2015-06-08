@@ -39,6 +39,71 @@ namespace Retrospectiva.Backend.Web.Controllers {
             Context.SaveChanges();
         }
 
+        // POST api/values
+        [HttpPut]
+        [Route("")]
+        public void Put() {
+            CreateDropEventsOldMembers();
+            CreateDropEventsOldRetrospectives();
+
+            CreateDropEventsNewMember();
+            CreateDropEventsNewRetrospective();
+        }
+
+        private void CreateDropEventsNewRetrospective() {
+            var sprints = Context.Sprints.ToList();
+            var dropEvents = Context.Teams.Where(x => x.Name == "DropEvents").FirstOrDefault();
+            
+            SprintRetrospective sr = new SprintRetrospective() {
+                SprintId = sprints.Where(x => x.Number == 4).FirstOrDefault().Id,
+                TeamId = dropEvents.Id
+            };
+            sr.SetRetrospectiveMembers(dropEvents.Members.ToList());
+            Context.Retrospectives.Add(sr);
+            
+            Context.SaveChanges();
+        }
+
+        private void CreateDropEventsNewMember() {
+            var dropEvents = Context.Teams.Where(x => x.Name == "DropEvents").FirstOrDefault();
+            var newDropeventMember = Context.Users.Where(x => new string[] { "joao.lindgren" }.Contains(x.UserName)).FirstOrDefault();
+
+            
+            dropEvents.Members.Add(new Member() {
+                TeamId = dropEvents.Id,
+                UserId = newDropeventMember.Id
+            });
+            Context.SaveChanges();
+        }
+
+        private void CreateDropEventsOldRetrospectives() {
+            var sprints = Context.Sprints.ToList();
+            var dropEvents = Context.Teams.Where(x => x.Name == "DropEvents").FirstOrDefault();
+
+            for (int i = 1; i < 4; i++) {
+                SprintRetrospective sr = new SprintRetrospective() {
+                    SprintId = sprints.Where(x => x.Number == i).FirstOrDefault().Id,
+                    TeamId = dropEvents.Id
+                };
+                sr.SetRetrospectiveMembers(dropEvents.Members.ToList());
+                Context.Retrospectives.Add(sr);    
+            }
+            Context.SaveChanges();
+        }
+
+        private void CreateDropEventsOldMembers() {            
+            var dropEvents = Context.Teams.Where(x => x.Name == "DropEvents").FirstOrDefault();
+            var oldDropeventsUsers = Context.Users.Where(x => new string[] { "iwollmann", "apinto" }.Contains(x.UserName)).ToList();
+            dropEvents.Members = new List<Member>();
+            foreach (ApplicationUser user in oldDropeventsUsers) {
+                dropEvents.Members.Add(new Member() {
+                    TeamId = dropEvents.Id,
+                    UserId = user.Id
+                });
+            }
+            Context.SaveChanges();
+        }
+
         [HttpOptions]
         [Route("")]
         public HttpResponseMessage Options() {

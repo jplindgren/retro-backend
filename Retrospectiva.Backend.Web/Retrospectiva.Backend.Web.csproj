@@ -220,6 +220,23 @@
     <Compile Include="Migrations\201506021849272_RemoveSprintFromMember.Designer.cs">
       <DependentUpon>201506021849272_RemoveSprintFromMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506060454299_AddRetrospectiveMember.cs" />
+    <Compile Include="Migrations\201506060454299_AddRetrospectiveMember.Designer.cs">
+      <DependentUpon>201506060454299_AddRetrospectiveMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506060515577_RemoveAnswerFromSprintRetrospective.cs" />
+    <Compile Include="Migrations\201506060515577_RemoveAnswerFromSprintRetrospective.Designer.cs">
+      <DependentUpon>201506060515577_RemoveAnswerFromSprintRetrospective.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506060521253_FixRetrospectiveMember.cs" />
+    <Compile Include="Migrations\201506060521253_FixRetrospectiveMember.Designer.cs">
+      <DependentUpon>201506060521253_FixRetrospectiveMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506072104303_AddCurrentAttributeToRetrospective.cs" />
+    <Compile Include="Migrations\201506072104303_AddCurrentAttributeToRetrospective.Designer.cs">
+      <DependentUpon>201506072104303_AddCurrentAttributeToRetrospective.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RetrospectiveMember.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -227,8 +244,6 @@
     <Compile Include="Controllers\SprintsController.cs" />
     <Compile Include="Controllers\RetrospectivesController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\AllowCrossOriginAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -342,7 +357,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -392,6 +409,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506021849272_RemoveSprintFromMember.resx">
       <DependentUpon>201506021849272_RemoveSprintFromMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506060454299_AddRetrospectiveMember.resx">
+      <DependentUpon>201506060454299_AddRetrospectiveMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506060515577_RemoveAnswerFromSprintRetrospective.resx">
+      <DependentUpon>201506060515577_RemoveAnswerFromSprintRetrospective.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506060521253_FixRetrospectiveMember.resx">
+      <DependentUpon>201506060521253_FixRetrospectiveMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506072104303_AddCurrentAttributeToRetrospective.resx">
+      <DependentUpon>201506072104303_AddCurrentAttributeToRetrospective.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

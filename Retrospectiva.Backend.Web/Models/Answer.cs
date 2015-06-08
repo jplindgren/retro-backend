@@ -16,12 +16,8 @@ namespace Retrospectiva.Backend.Web.Models {
         public Question Question { get; set; }
         public Guid QuestionId { get; set; }
 
-        [ForeignKey("MemberId")]
-        public Member Member { get; set; }
-        public Guid MemberId { get; set; }
-
-        [ForeignKey("RetrospectiveId")]
-        public SprintRetrospective Retrospective { get; set; }
-        public Guid RetrospectiveId { get; set; }
+        [ForeignKey("RetrospectiveMemberId")]
+        public RetrospectiveMember RetrospectiveMember { get; set; }
+        public Guid RetrospectiveMemberId { get; set; }
     } //class
 }

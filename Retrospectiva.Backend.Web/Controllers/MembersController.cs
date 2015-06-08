@@ -18,9 +18,9 @@ namespace Retrospectiva.Backend.Web.Controllers {
             return representations;
         }
 
-        [Route("{id:Guid}")]
-        public MemberRepresentation Get(Guid id) {
-            return ModelFactory.GetMemberDetailRepresentation(GetMember(id));
+        [Route("{userId:Guid}")]
+        public MemberRepresentation Get(Guid userId) {
+            return ModelFactory.GetMemberDetailRepresentation(GetMemberByUserId(userId));
         }
 
         // POST api/members
@@ -48,7 +48,7 @@ namespace Retrospectiva.Backend.Web.Controllers {
         [Route("")]
         [HttpDelete]
         public void Delete(Guid id) {
-            var member = GetMember(id);
+            var member = GetMemberByUserId(id);
             Context.Members.Add(member);
             Context.SaveChanges();
         }
@@ -63,8 +63,8 @@ namespace Retrospectiva.Backend.Web.Controllers {
         //}
         #endregion
 
-        private Member GetMember(Guid id) {
-            return Context.Members.Include("Team").Where(x => x.Id == id).FirstOrDefault();            
+        private Member GetMemberByUserId(Guid userId) {
+            return Context.Members.Include("Team").Include("User").Where(x => x.UserId == userId.ToString()).FirstOrDefault();
         }
     } //class
 }

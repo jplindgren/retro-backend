@@ -10,6 +10,7 @@ namespace Retrospectiva.Backend.Web.Representation {
         public MemberRepresentation GetMemberRepresentation(Member member) {
             return new MemberRepresentation() {
                 Id = member.Id,
+                UserId = member.UserId,
                 UserName = member.User.UserName,
                 Name = member.User.Name
             };
@@ -20,8 +21,18 @@ namespace Retrospectiva.Backend.Web.Representation {
                 Id = member.Id,
                 Name = member.User.Name,
                 UserName = member.User.UserName,
+                UserId = member.UserId,
                 TeamId = member.TeamId,
                 TeamName = member.Team.Name
+            };
+        }
+
+        public MemberDetailRepresentation GetRetrospectiveMemberRepresentation(RetrospectiveMember member) {
+            return new MemberDetailRepresentation() {
+                Id = member.Id,
+                Name = member.User.Name,
+                UserId = member.UserId,
+                UserName = member.User.UserName
             };
         }
 
@@ -43,7 +54,7 @@ namespace Retrospectiva.Backend.Web.Representation {
                 SprintId = retrospective.SprintId,
                 TeamId = retrospective.TeamId,
                 Questions = retrospective.Questions.Select(x => GetQuestionRepresentation(x)),
-                Members = retrospective.Members.Select(x => GetMemberRepresentation(x))
+                Members = retrospective.Members.Select(x => GetRetrospectiveMemberRepresentation(x))
             };
         }
 
@@ -57,7 +68,14 @@ namespace Retrospectiva.Backend.Web.Representation {
         public QuestionRepresentation GetQuestionRepresentation(Question question) { 
             return new QuestionRepresentation() {
                 Id = question.Id,
-                Description = question.Description
+                Description = question.Description,
+            };
+        }
+
+        public CurrentRetrospectiveQuestionsRepresentation GetCurrentRetrospectiveQuestionsRepresentation(SprintRetrospective retrospective) {
+            return new CurrentRetrospectiveQuestionsRepresentation() {
+                Sprint = retrospective.Sprint.Number,
+                Questions = retrospective.Questions.Select(x => GetQuestionRepresentation(x)).ToArray()
             };
         }
 

@@ -8,4 +8,9 @@ namespace Retrospectiva.Backend.Web.Representation {
         public Guid Id { get; set; }
         public string Description { get; set; }
     } //class
+
+    public class CurrentRetrospectiveQuestionsRepresentation {
+        public int Sprint { get; set; }
+        public QuestionRepresentation[] Questions { get; set; }
+    } //class
 }
